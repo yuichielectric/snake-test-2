@@ -24,6 +24,9 @@ for (let y = 0; y < height; y++) {
   walls.push({ x: width - 1, y: y });
 }
 
+// スコアの初期値
+let score = 0;
+
 // ゲームのメインループ
 function main() {
   // スネークを移動する
@@ -34,6 +37,8 @@ function main() {
   if (head.x === food.x && head.y === food.y) {
     food.x = Math.floor(Math.random() * width);
     food.y = Math.floor(Math.random() * height);
+    score++;
+    document.getElementById("score").textContent = score;
   } else {
     snake.pop();
   }
@@ -42,6 +47,12 @@ function main() {
   if (head.x < 0 || head.x >= width || head.y < 0 || head.y >= height) {
     clearInterval(intervalId);
     alert("ゲームオーバー");
+  }
+  for (let i = 0; i < walls.length; i++) {
+    if (head.x === walls[i].x && head.y === walls[i].y) {
+      clearInterval(intervalId);
+      alert("ゲームオーバー");
+    }
   }
 
   // スネークが自分自身にぶつかった場合
